@@ -340,6 +340,32 @@ func ListVersions(filename string, key string) ([]int64, error) {
 	return result, nil
 }
 
+func ListAllKeysVersions(filename string, prefix string) (map[string][]int64, error) {
+	db, err := boltOpen(filename)
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+	keys2Revs := make(map[string][]int64, 0)
+
+	err = walk(db, func(_ revKey, kv *mvccpb.KeyValue) (bool, error) {
+		if !strings.HasPrefix(string(kv.Key), prefix) {
+			return false, nil
+		}
+		if arr, ok := keys2Revs[string(kv.Key)]; ok {
+			arr = append(arr, kv.Version)
+			keys2Revs[string(kv.Key)] = arr
+		} else {
+			keys2Revs[string(kv.Key)] = []int64{kv.Version}
+		}
+		return false, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return keys2Revs, nil
+}
+
 // GetValue scans the bucket of the bolt db file for a etcd v3 record with the given key and returns the value.
 // Because bolt db files are indexed by revision
 func GetValue(filename string, key string, version int64) ([]byte, error) {

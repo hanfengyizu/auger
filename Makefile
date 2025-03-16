@@ -14,7 +14,7 @@
 # limitations under the License.
 
 NAME ?= auger
-GOOS ?= linux
+#GOOS ?= linux
 GOARCH ?= amd64
 GOFILES = $(shell find . -name \*.go)
 CGO_ENABLED ?= 0
@@ -57,3 +57,8 @@ pkg/scheme/scheme.go: ./hack/gen_scheme.sh go.mod
 generate: pkg/scheme/scheme.go
 
 .PHONY: build test clean
+
+
+install: build
+	mv build/auger ${GOBIN}/auger
+
