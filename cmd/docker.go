@@ -55,7 +55,7 @@ func docker(o *dockerOptions) {
 	if err != nil {
 		return
 	}
-	outPutFile.WriteString(fmt.Sprintf("key,lastet validVersion,corruptVersions,HasCorrupt\n",)
+	outPutFile.WriteString(fmt.Sprint("key,lastet validVersion,corruptVersions,HasCorrupt\n"))
 	for key, arr := range keys2Revsions {
 		SortRevisionsDesc(arr)
 		corruptVersions := make([]int64, 0)
