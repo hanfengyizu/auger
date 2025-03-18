@@ -9,3 +9,7 @@ func TestSortKeysInt64s(t *testing.T) {
 	SortRevisionsDesc(arr)
 	t.Log(arr)
 }
+
+func TestPrintBool(t *testing.T) {
+	t.Logf("%t", true)
+}

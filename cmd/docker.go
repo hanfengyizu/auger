@@ -55,7 +55,7 @@ func docker(o *dockerOptions) {
 	if err != nil {
 		return
 	}
-	outPutFile.WriteString(fmt.Sprint("key,lastet validVersion,corruptVersions,HasCorrupt\n"))
+	outPutFile.WriteString(fmt.Sprint("key,lastet validVersion,corruptVersions,NotCorrupt\n"))
 	for key, arr := range keys2Revsions {
 		SortRevisionsDesc(arr)
 		corruptVersions := make([]int64, 0)
@@ -68,7 +68,7 @@ func docker(o *dockerOptions) {
 				break
 			}
 		}
-		outPutFile.WriteString(fmt.Sprintf("%s,%d,%+v,%T\n", key, validVersion, corruptVersions, len(corruptVersions) == 0))
+		outPutFile.WriteString(fmt.Sprintf("%s,%d,%+v,%t\n", key, validVersion, corruptVersions, len(corruptVersions) == 0))
 	}
 	outPutFile.Close()
 }
