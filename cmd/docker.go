@@ -100,7 +100,7 @@ func isDataCorrupt(filename string, key string, v int64, outMediaType string) bo
 
 func init() {
 	RootCmd.AddCommand(dockerCmd)
-	dockerCmd.Flags().StringVarP(&dockerOpts.outFile, "outFile", "", "/tmp/auger.docker.csv", "	Output file")
-	dockerCmd.Flags().StringVarP(&dockerOpts.registry, "registry", "", "/registry", " prefix ")
-	dockerCmd.Flags().StringVarP(&dockerOpts.filename, "file", "f", "", "Bolt DB '.db' filename")
+	dockerCmd.PersistentFlags().StringVarP(&dockerOpts.outFile, "outFile", "", "/tmp/auger.docker.csv", "	Output file")
+	dockerCmd.PersistentFlags().StringVarP(&dockerOpts.registry, "registry", "", "/registry", " prefix ")
+	dockerCmd.PersistentFlags().StringVarP(&dockerOpts.filename, "file", "f", "", "Bolt DB '.db' filename")
 }
